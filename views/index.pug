@@ -1,0 +1,13 @@
+doctype html
+html(lang="en")
+  head
+    title TodoList with htmx in Node.js
+    script(src="https://unpkg.com/htmx.org@1.2.1")
+    script(src="https://unpkg.com/hyperscript.org@0.0.4")
+  body
+    h1 Todolist
+    form
+      p
+        input(type="text", name="todo")
+        button(type="button", hx-post="/todos",hx-target="#todo-list") Add Todo
+    ul#todo-list
