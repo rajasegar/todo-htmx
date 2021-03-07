@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const pug = require('pug');
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,15 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 app.set('view engine', 'pug');
 
 
-const renderTodos = () => {
-return todos.map(t => {
-    return `<li>
-      <input type="checkbox">
-      ${t}
-      <button type="button" hx-delete="/todos/${t}" hx-target="#todo-list">&times;</button>
-      </li>`
-  }).join('\n');
-}
+
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -29,15 +22,16 @@ app.get('/', (req, res) => {
 app.post('/todos', (req,res) => {
   const { todo } = req.body;
   todos.push(todo);
-  res.send(renderTodos());
+  const render = pug.compileFile('./views/includes/todolist.pug');
+  res.send(render({ todos }));
 });
 
 app.delete('/todos/:id', (req,res) => {
   const { id } = req.params;
   const idx = todos.find(t => t === id);
   todos.splice(idx, 1);
-  res.send(renderTodos());
-  
+  const render = pug.compileFile('./views/includes/todolist.pug');
+  res.send(render({ todos }));
 });
 
 app.use(express.static(__dirname + '/assets'));

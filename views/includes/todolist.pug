@@ -1,3 +1,8 @@
-ul
+tbody
   each todo in todos
-    li= todo
+    tr
+      td 
+        input.form-check-input.me-1(type="checkbox")
+      td= todo
+      td 
+        button.btn.btn-danger(type="button", hx-delete='/todos/' + todo, hx-target="#todo-list") &times;

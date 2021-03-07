@@ -1,13 +1,21 @@
 doctype html
 html(lang="en")
   head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
     title TodoList with htmx in Node.js
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl", crossorigin="anonymous")
+
     script(src="https://unpkg.com/htmx.org@1.2.1")
     script(src="https://unpkg.com/hyperscript.org@0.0.4")
   body
-    h1 Todolist
-    form
-      p
-        input(type="text", name="todo")
-        button(type="button", hx-post="/todos",hx-target="#todo-list") Add Todo
-    ul#todo-list
+    .container
+      h1.text-center Todolist
+      form(hx-post="/todos",hx-target="#todo-list", _="on htmx:afterOnLoad set #txtTodo.value to ''")
+        .input-group.mb-3
+          input.form-control(id="txtTodo",type="text", name="todo", arial-label="Todo input field", placeholder="Add a Todo item here")
+          button.btn.btn-primary(type="submit") Add Todo
+      table#todo-list(class="table table-striped")
+      footer.footer.mt-auto.py-3.bg-light
+        p.text-center
+          a(href="https://github.com/rajasegar/todo-htmx") Github
